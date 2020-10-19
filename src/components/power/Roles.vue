@@ -7,47 +7,39 @@
       <el-breadcrumb-item>角色列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="box-card">
-      <el-button type="primary" @click="AddRolesDialogVisible = true"
-        >添加角色</el-button
-      >
-      <el-table :data="rolesList" stripe border>
+      <el-button type="primary"
+                 @click="AddRolesDialogVisible = true">添加角色</el-button>
+      <el-table :data="rolesList"
+                stripe
+                border>
         <el-table-column type="expand">
           <template v-slot="scope">
-            <el-row
-              v-for="item in scope.row.children"
-              :key="item.id"
-              class="bdtop"
-            >
+            <el-row v-for="item in scope.row.children"
+                    :key="item.id"
+                    class="bdtop">
               <el-col :span="6">
-                <el-tag closable @close="deleteThreeRoles(scope.row, item)">{{
+                <el-tag closable
+                        @close="deleteThreeRoles(scope.row, item)">{{
                   item.authName
                 }}</el-tag>
                 <i class="el-icon-caret-right"></i>
               </el-col>
               <el-col :span="18">
-                <el-row
-                  v-for="item1 in item.children"
-                  :key="item1.id"
-                  class="bdbottom"
-                >
+                <el-row v-for="item1 in item.children"
+                        :key="item1.id"
+                        class="bdbottom">
                   <el-col :span="6">
-                    <el-tag
-                      closable
-                      type="success"
-                      @close="deleteThreeRoles(scope.row, item1)"
-                      >{{ item1.authName }}</el-tag
-                    >
+                    <el-tag closable
+                            type="success"
+                            @close="deleteThreeRoles(scope.row, item1)">{{ item1.authName }}</el-tag>
                     <i class="el-icon-caret-right"></i>
                   </el-col>
                   <el-col :span="18">
-                    <el-tag
-                      closable
-                      v-for="item2 in item1.children"
-                      :key="item2.id"
-                      type="warning"
-                      @close="deleteThreeRoles(scope.row, item2)"
-                      >{{ item2.authName }}</el-tag
-                    >
+                    <el-tag closable
+                            v-for="item2 in item1.children"
+                            :key="item2.id"
+                            type="warning"
+                            @close="deleteThreeRoles(scope.row, item2)">{{ item2.authName }}</el-tag>
                     <i class="el-icon-caret-right"></i>
                   </el-col>
                 </el-row>
@@ -56,111 +48,103 @@
           </template>
         </el-table-column>
         <el-table-column type="index"> </el-table-column>
-        <el-table-column label="角色名称" prop="roleName"></el-table-column>
-        <el-table-column label="角色描述" prop="roleDesc"></el-table-column>
-        <el-table-column label="操作" width="400">
+        <el-table-column label="角色名称"
+                         prop="roleName"></el-table-column>
+        <el-table-column label="角色描述"
+                         prop="roleDesc"></el-table-column>
+        <el-table-column label="操作"
+                         width="400">
           <template v-slot="{ row }">
-            <el-button
-              size="mini"
-              type="primary"
-              icon="el-icon-edit"
-              @click="editRolesForm(row.id)"
-              >编辑</el-button
-            >
-            <el-button
-              size="mini"
-              type="danger"
-              icon="el-icon-delete"
-              @click="deleteRolesForm(row.id)"
-              >删除</el-button
-            >
-            <el-button
-              size="mini"
-              type="warning"
-              icon="el-icon-s-tools"
-              @click="showRolesTree(row)"
-              >分配权限</el-button
-            >
+            <el-button size="mini"
+                       type="primary"
+                       icon="el-icon-edit"
+                       @click="editRolesForm(row.id)">编辑</el-button>
+            <el-button size="mini"
+                       type="danger"
+                       icon="el-icon-delete"
+                       @click="deleteRolesForm(row.id)">删除</el-button>
+            <el-button size="mini"
+                       type="warning"
+                       icon="el-icon-s-tools"
+                       @click="showRolesTree(row)">分配权限</el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
 
     <!-- 添加弹出框 -->
-    <el-dialog
-      title="添加角色"
-      :visible.sync="AddRolesDialogVisible"
-      width="50%"
-      @close="AddRolesDialogClose"
-    >
-      <el-form
-        :label-position="labelPosition"
-        label-width="80px"
-        :model="AddRoles"
-        :rules="AddRolesFormRules"
-        ref="AddRolesFormRef"
-      >
-        <el-form-item label="角色名称" prop="roleName">
+    <el-dialog title="添加角色"
+               :visible.sync="AddRolesDialogVisible"
+               width="50%"
+               @close="AddRolesDialogClose">
+      <el-form :label-position="labelPosition"
+               label-width="80px"
+               :model="AddRoles"
+               :rules="AddRolesFormRules"
+               ref="AddRolesFormRef">
+        <el-form-item label="角色名称"
+                      prop="roleName">
           <el-input v-model="AddRoles.roleName"></el-input>
         </el-form-item>
-        <el-form-item label="角色描述" prop="roleDesc">
+        <el-form-item label="角色描述"
+                      prop="roleDesc">
           <el-input v-model="AddRoles.roleDesc"></el-input>
         </el-form-item>
       </el-form>
 
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer"
+            class="dialog-footer">
         <el-button @click="AddRolesDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="AddRolesInfo"> 确 定 </el-button>
+        <el-button type="primary"
+                   @click="AddRolesInfo"> 确 定 </el-button>
       </span>
     </el-dialog>
 
     <!-- 编辑弹出框 -->
-    <el-dialog
-      title="提示"
-      :visible.sync="editRolesDialogVisible"
-      width="50%"
-      @close="editRolesDialogClosed"
-    >
-      <el-form
-        :label-position="labelPosition"
-        label-width="80px"
-        :model="editRoles"
-        :rules="editRolesFormRules"
-        ref="editRolesFormRef"
-      >
-        <el-form-item label="用户" prop="roleName">
+    <el-dialog title="提示"
+               :visible.sync="editRolesDialogVisible"
+               width="50%"
+               @close="editRolesDialogClosed">
+      <el-form :label-position="labelPosition"
+               label-width="80px"
+               :model="editRoles"
+               :rules="editRolesFormRules"
+               ref="editRolesFormRef">
+        <el-form-item label="用户"
+                      prop="roleName">
           <el-input v-model="editRoles.roleName"></el-input>
         </el-form-item>
-        <el-form-item label="用户描述" prop="roleDesc">
+        <el-form-item label="用户描述"
+                      prop="roleDesc">
           <el-input v-model="editRoles.roleDesc"></el-input>
         </el-form-item>
       </el-form>
 
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer"
+            class="dialog-footer">
         <el-button @click="editRolesDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editRolesInfo"> 确 定 </el-button>
+        <el-button type="primary"
+                   @click="editRolesInfo"> 确 定 </el-button>
       </span>
     </el-dialog>
 
     <!-- 权限树 -->
-    <el-dialog
-      title="分配权限"
-      :visible.sync="showRolesVisible"
-      width="50%"
-      @close="showRolesTreeClosed"
-    >
-      <el-tree
-        :data="rolesTree"
-        :props="defaultProps"
-        default-expand-all
-        show-checkbox
-        node-key="id"
-        :default-checked-keys="defKeys"
-        ref="treeRef"
-      ></el-tree>
-      <span slot="footer" class="dialog-footer">
+    <el-dialog title="分配权限"
+               :visible.sync="showRolesVisible"
+               width="50%"
+               @close="showRolesTreeClosed">
+      <el-tree :data="rolesTree"
+               :props="defaultProps"
+               default-expand-all
+               show-checkbox
+               node-key="id"
+               :default-checked-keys="defKeys"
+               ref="treeRef"></el-tree>
+      <span slot="footer"
+            class="dialog-footer">
         <el-button @click="showRolesVisible = false">取 消</el-button>
-        <el-button type="primary" @click="resetRolesInfo">确 定</el-button>
+        <el-button type="primary"
+                   @click="resetRolesInfo">确 定</el-button>
       </span>
     </el-dialog>
   </div>

@@ -9,22 +9,26 @@
 
     <!-- 卡片 -->
     <el-card class="box-card">
-      <el-table :data="rightList" stripe border>
+      <el-table :data="rightList"
+                stripe
+                border>
         <el-table-column type="index"> </el-table-column>
-        <el-table-column label="权限名称" prop="authName"></el-table-column>
-        <el-table-column label="路径" prop="path"></el-table-column>
-        <el-table-column label="权限等级" prop="level">
+        <el-table-column label="权限名称"
+                         prop="authName"></el-table-column>
+        <el-table-column label="路径"
+                         prop="path"></el-table-column>
+        <el-table-column label="权限等级"
+                         prop="level">
           <template #default="scope">
-            <el-tag v-if="scope.row.level === '0'" effect="dark"
-              >一级权限</el-tag
-            >
-            <el-tag
-              type="success"
-              effect="dark"
-              v-else-if="scope.row.level === '1'"
-              >二级权限
+            <el-tag v-if="scope.row.level === '0'"
+                    effect="dark">一级权限</el-tag>
+            <el-tag type="success"
+                    effect="dark"
+                    v-else-if="scope.row.level === '1'">二级权限
             </el-tag>
-            <el-tag type="warning" effect="dark" v-else>三级权限</el-tag>
+            <el-tag type="warning"
+                    effect="dark"
+                    v-else>三级权限</el-tag>
           </template>
         </el-table-column>
       </el-table>

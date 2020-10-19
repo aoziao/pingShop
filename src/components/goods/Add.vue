@@ -11,11 +11,16 @@
     <el-card>
       <el-row>
         <el-col>
-          <el-alert title="添加商品信息" type="info" center show-icon>
+          <el-alert title="添加商品信息"
+                    type="info"
+                    center
+                    show-icon>
           </el-alert>
         </el-col>
         <el-col>
-          <el-steps :active="active - 0" finish-status="success" align-center>
+          <el-steps :active="active - 0"
+                    finish-status="success"
+                    align-center>
             <el-step title="基本信息"></el-step>
             <el-step title="商品参数"></el-step>
             <el-step title="商品属性"></el-step>
@@ -27,99 +32,96 @@
       </el-row>
 
       <!-- tab标签-->
-      <el-form
-        :label-position="labelPosition"
-        label-width="80px"
-        :model="addGoods"
-        :rules="addGoodsFormRules"
-        ref="addGoodsFormRef"
-      >
-        <el-tabs
-          :tab-position="tabPosition"
-          v-model="active"
-          style="height: 900px"
-          :before-leave="beforeTabLeave"
-          @tab-click="tabClicked"
-        >
-          <el-tab-pane label="基本信息" name="0">
-            <el-form-item label="商品名称" prop="goods_name">
+      <el-form :label-position="labelPosition"
+               label-width="80px"
+               :model="addGoods"
+               :rules="addGoodsFormRules"
+               ref="addGoodsFormRef">
+        <el-tabs :tab-position="tabPosition"
+                 v-model="active"
+                 style="height: 900px"
+                 :before-leave="beforeTabLeave"
+                 @tab-click="tabClicked">
+          <el-tab-pane label="基本信息"
+                       name="0">
+            <el-form-item label="商品名称"
+                          prop="goods_name">
               <el-input v-model="addGoods.goods_name"></el-input>
             </el-form-item>
-            <el-form-item label="商品价格(元)" prop="goods_price">
-              <el-input v-model="addGoods.goods_price" type="number"></el-input>
+            <el-form-item label="商品价格(元)"
+                          prop="goods_price">
+              <el-input v-model="addGoods.goods_price"
+                        type="number"></el-input>
             </el-form-item>
-            <el-form-item label="商品重量(千克)" prop="goods_weight">
-              <el-input
-                v-model="addGoods.goods_weight"
-                type="number"
-              ></el-input>
+            <el-form-item label="商品重量(千克)"
+                          prop="goods_weight">
+              <el-input v-model="addGoods.goods_weight"
+                        type="number"></el-input>
             </el-form-item>
-            <el-form-item label="商品数量" prop="goods_number">
-              <el-input
-                v-model="addGoods.goods_number"
-                type="number"
-              ></el-input>
+            <el-form-item label="商品数量"
+                          prop="goods_number">
+              <el-input v-model="addGoods.goods_number"
+                        type="number"></el-input>
             </el-form-item>
             <el-form-item label="商品分类">
-              <el-cascader
-                v-model="addGoods.goods_cat"
-                :options="cateList"
-                :props="cascaderProps"
-                @change="selectedCateChange"
-              ></el-cascader>
+              <el-cascader v-model="addGoods.goods_cat"
+                           :options="cateList"
+                           :props="cascaderProps"
+                           @change="selectedCateChange"></el-cascader>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="商品参数" name="1">
-            <el-form-item
-              :label="item.attr_name"
-              :key="item.attr_id"
-              v-for="item in manyTabData"
-            >
+          <el-tab-pane label="商品参数"
+                       name="1">
+            <el-form-item :label="item.attr_name"
+                          :key="item.attr_id"
+                          v-for="item in manyTabData">
               <el-checkbox-group v-model="item.attr_vals">
-                <el-checkbox
-                  border
-                  :label="item1"
-                  v-for="(item1, index) in item.attr_vals"
-                  :key="index"
-                ></el-checkbox>
+                <el-checkbox border
+                             :label="item1"
+                             v-for="(item1, index) in item.attr_vals"
+                             :key="index"></el-checkbox>
               </el-checkbox-group>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="商品属性" name="2">
-            <el-form-item
-              :label="item.attr_name"
-              :key="item.attr_id"
-              v-for="item in onlyTabData"
-            >
+          <el-tab-pane label="商品属性"
+                       name="2">
+            <el-form-item :label="item.attr_name"
+                          :key="item.attr_id"
+                          v-for="item in onlyTabData">
               <el-input v-model="item.attr_vals"></el-input>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="商品图片" name="3">
-            <el-upload
-              :action="imgUplaodUrl"
-              :on-preview="handlePreview"
-              :headers="headersObj"
-              :on-remove="handleRemove"
-              :on-progress="handleUpdate"
-              :on-success="handleSuccess"
-              list-type="picture"
-            >
-              <el-button size="small" type="primary">点击上传</el-button>
+          <el-tab-pane label="商品图片"
+                       name="3">
+            <el-upload :action="imgUplaodUrl"
+                       :on-preview="handlePreview"
+                       :headers="headersObj"
+                       :on-remove="handleRemove"
+                       :on-progress="handleUpdate"
+                       :on-success="handleSuccess"
+                       list-type="picture">
+              <el-button size="small"
+                         type="primary">点击上传</el-button>
             </el-upload>
           </el-tab-pane>
-          <el-tab-pane label="商品内容" name="4">
+          <el-tab-pane label="商品内容"
+                       name="4">
             <quill-editor v-model="addGoods.goods_introduce"></quill-editor>
-            <el-button type="primary" class="btnadd" @click="addGoodsInfo"
-              >添加商品</el-button
-            >
+            <el-button type="primary"
+                       class="btnadd"
+                       @click="addGoodsInfo">添加商品</el-button>
           </el-tab-pane>
         </el-tabs>
       </el-form>
     </el-card>
 
     <!-- 图片预览 -->
-    <el-dialog title="图片预览" :visible.sync="previewVisible" width="40%">
-      <img :src="previewPath" alt="" class="preview_img" />
+    <el-dialog title="图片预览"
+               :visible.sync="previewVisible"
+               width="40%">
+      <img :src="previewPath"
+           alt=""
+           class="preview_img" />
     </el-dialog>
   </div>
 </template>

@@ -17,9 +17,11 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
+// 导入NProgress
 
+import 'nprogress/nprogress.css'
 // 导入axios
-import { axios } from './plugins/axios' // 设置语言 或 moment.lang('zh-cn')
+import { axios } from './plugins/axios'
 
 Moment.locale('zh-cn')// 设置语言 或 moment.lang('zh-cn');
 // 定义时间过滤器函数

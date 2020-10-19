@@ -11,109 +11,105 @@
     <el-card>
       <el-row :gutter="20">
         <el-col :span="8">
-          <el-input placeholder="请输入内容" v-model="queryInfo.query">
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="getGoodsList"
-            ></el-button>
+          <el-input placeholder="请输入内容"
+                    v-model="queryInfo.query">
+            <el-button slot="append"
+                       icon="el-icon-search"
+                       @click="getGoodsList"></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="goPageAdd">添加商品</el-button>
+          <el-button type="primary"
+                     @click="goPageAdd">添加商品</el-button>
         </el-col>
       </el-row>
 
       <!-- 列表渲染 -->
-      <el-table :data="goodsList" border stripe style="width: 100%">
+      <el-table :data="goodsList"
+                border
+                stripe
+                style="width: 100%">
         <el-table-column type="index"> </el-table-column>
-        <el-table-column
-          prop="goods_name"
-          label="商品名称"
-          class="name_class"
-          width="570"
-        >
+        <el-table-column prop="goods_name"
+                         label="商品名称"
+                         class="name_class"
+                         width="570">
         </el-table-column>
-        <el-table-column prop="goods_price" label="商品价格(元)">
+        <el-table-column prop="goods_price"
+                         label="商品价格(元)">
         </el-table-column>
-        <el-table-column prop="goods_weight" label="商品重量">
+        <el-table-column prop="goods_weight"
+                         label="商品重量">
         </el-table-column>
-        <el-table-column prop="add_time" label="创建时间" width="150">
+        <el-table-column prop="add_time"
+                         label="创建时间"
+                         width="150">
           <template #default="{ row }">
             {{ row.add_time | dataFormat("YYYY-MM-DDDD  hh:mm:ss") }}
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="120">
+        <el-table-column label="操作"
+                         width="120">
           <template #default="scope">
-            <el-button
-              type="primary"
-              icon="el-icon-edit"
-              size="mini"
-              @click="editGoodsList(scope.row.goods_id)"
-            ></el-button>
-            <el-button
-              type="danger"
-              icon="el-icon-delete"
-              size="mini"
-              @click="deleteeditGoodsList(scope.row.goods_id)"
-            ></el-button>
+            <el-button type="primary"
+                       icon="el-icon-edit"
+                       size="mini"
+                       @click="editGoodsList(scope.row.goods_id)"></el-button>
+            <el-button type="danger"
+                       icon="el-icon-delete"
+                       size="mini"
+                       @click="deleteeditGoodsList(scope.row.goods_id)"></el-button>
           </template>
         </el-table-column>
       </el-table>
 
       <!--分页  -->
-      <el-pagination
-        background
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page.sync="queryInfo.pagenum"
-        :page-size="10"
-        :page-sizes="[10, 20, 50, 100]"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      >
+      <el-pagination background
+                     @size-change="handleSizeChange"
+                     @current-change="handleCurrentChange"
+                     :current-page.sync="queryInfo.pagenum"
+                     :page-size="10"
+                     :page-sizes="[10, 20, 50, 100]"
+                     layout="total, sizes, prev, pager, next, jumper"
+                     :total="total">
       </el-pagination>
     </el-card>
 
     <!-- 编辑弹出框 -->
-    <el-dialog
-      title="提示"
-      :visible.sync="editGoodsInfoDialogVisible"
-      width="50%"
-      @close="editGoodsInfoDialogClosed"
-    >
-      <el-form
-        :label-position="labelPosition"
-        label-width="120px"
-        :model="editGoodsInfo"
-        :rules="editGoodsInfoFormRules"
-        ref="editGoodsInfoFormRef"
-      >
-        <el-form-item label="商品名称" prop="goods_name">
+    <el-dialog title="提示"
+               :visible.sync="editGoodsInfoDialogVisible"
+               width="50%"
+               @close="editGoodsInfoDialogClosed">
+      <el-form :label-position="labelPosition"
+               label-width="120px"
+               :model="editGoodsInfo"
+               :rules="editGoodsInfoFormRules"
+               ref="editGoodsInfoFormRef">
+        <el-form-item label="商品名称"
+                      prop="goods_name">
           <el-input v-model="editGoodsInfo.goods_name"></el-input>
         </el-form-item>
-        <el-form-item label="商品价格(元)" prop="goods_price">
-          <el-input
-            v-model="editGoodsInfo.goods_price"
-            type="number"
-          ></el-input>
+        <el-form-item label="商品价格(元)"
+                      prop="goods_price">
+          <el-input v-model="editGoodsInfo.goods_price"
+                    type="number"></el-input>
         </el-form-item>
-        <el-form-item label="商品数量" prop="goods_number">
-          <el-input
-            v-model="editGoodsInfo.goods_number"
-            type="number"
-          ></el-input>
+        <el-form-item label="商品数量"
+                      prop="goods_number">
+          <el-input v-model="editGoodsInfo.goods_number"
+                    type="number"></el-input>
         </el-form-item>
-        <el-form-item label="商品重量(千克)" prop="goods_weight">
-          <el-input
-            v-model="editGoodsInfo.goods_weight"
-            type="number"
-          ></el-input>
+        <el-form-item label="商品重量(千克)"
+                      prop="goods_weight">
+          <el-input v-model="editGoodsInfo.goods_weight"
+                    type="number"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer"
+            class="dialog-footer">
         <el-button @click="editGoodsInfoDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveEditGoodsInfo"> 确 定 </el-button>
+        <el-button type="primary"
+                   @click="saveEditGoodsInfo"> 确 定 </el-button>
       </span>
     </el-dialog>
   </div>

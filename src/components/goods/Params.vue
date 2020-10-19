@@ -10,155 +10,130 @@
     <el-card>
       <el-row>
         <el-col>
-          <el-alert
-            title="注意：只允许为第三级分类设置相关参数！"
-            type="warning"
-            :closable="false"
-            show-icon
-          >
+          <el-alert title="注意：只允许为第三级分类设置相关参数！"
+                    type="warning"
+                    :closable="false"
+                    show-icon>
           </el-alert>
         </el-col>
         <el-col>
           <span>请选择分类：</span>
-          <el-cascader
-            v-model="selectedCateKeys"
-            :options="cateList"
-            :props="cascaderProps"
-            @change="selectedCateChange"
-          ></el-cascader>
+          <el-cascader v-model="selectedCateKeys"
+                       :options="cateList"
+                       :props="cascaderProps"
+                       @change="selectedCateChange"></el-cascader>
         </el-col>
       </el-row>
 
       <!-- 页签 -->
-      <el-tabs v-model="activeName" @tab-click="handleTabClick">
-        <el-tab-pane label="动态参数" name="many">
-          <el-button
-            type="primary"
-            size="mini"
-            :disabled="isBtnDisabled"
-            @click="addmanyDataDialogVisible = true"
-            >添加参数
+      <el-tabs v-model="activeName"
+               @tab-click="handleTabClick">
+        <el-tab-pane label="动态参数"
+                     name="many">
+          <el-button type="primary"
+                     size="mini"
+                     :disabled="isBtnDisabled"
+                     @click="addmanyDataDialogVisible = true">添加参数
           </el-button>
 
           <!-- 动态参数表格 -->
-          <el-table :data="manyTabData" stripe border>
+          <el-table :data="manyTabData"
+                    stripe
+                    border>
             <el-table-column type="expand">
               <template #default="scope">
-                <el-tag
-                  v-for="(item, index) in scope.row.attr_vals"
-                  :key="index"
-                  closable
-                  @close="handleClose(index, scope.row)"
-                >
+                <el-tag v-for="(item, index) in scope.row.attr_vals"
+                        :key="index"
+                        closable
+                        @close="handleClose(index, scope.row)">
                   {{ item }}
                 </el-tag>
-                <el-input
-                  class="input-new-tag"
-                  v-if="scope.row.addNewTagVisible"
-                  v-model="scope.row.addNewTagValue"
-                  ref="saveTagInput"
-                  size="small"
-                  @keyup.enter.native="handleInputConfirm(scope.row)"
-                  @blur="handleInputConfirm(scope.row)"
-                >
+                <el-input class="input-new-tag"
+                          v-if="scope.row.addNewTagVisible"
+                          v-model="scope.row.addNewTagValue"
+                          ref="saveTagInput"
+                          size="small"
+                          @keyup.enter.native="handleInputConfirm(scope.row)"
+                          @blur="handleInputConfirm(scope.row)">
                 </el-input>
-                <el-button
-                  v-else
-                  class="button-new-tag"
-                  size="small"
-                  @click="showInput(scope.row)"
-                  >+ New Tag</el-button
-                >
+                <el-button v-else
+                           class="button-new-tag"
+                           size="small"
+                           @click="showInput(scope.row)">+ New Tag</el-button>
               </template>
             </el-table-column>
             <el-table-column type="index"> </el-table-column>
-            <el-table-column
-              label="参数名称"
-              prop="attr_name"
-            ></el-table-column>
-            <el-table-column label="操作" width="400">
+            <el-table-column label="参数名称"
+                             prop="attr_name"></el-table-column>
+            <el-table-column label="操作"
+                             width="400">
               <template #default="scope">
-                <el-button
-                  size="mini"
-                  type="primary"
-                  icon="el-icon-edit"
-                  @click="showEditManyData(scope.row.attr_id)"
-                >
+                <el-button size="mini"
+                           type="primary"
+                           icon="el-icon-edit"
+                           @click="showEditManyData(scope.row.attr_id)">
                   编辑
                 </el-button>
-                <el-button
-                  size="mini"
-                  type="danger"
-                  icon="el-icon-delete"
-                  @click="deleteDataInfo(scope.row.attr_id)"
-                >
+                <el-button size="mini"
+                           type="danger"
+                           icon="el-icon-delete"
+                           @click="deleteDataInfo(scope.row.attr_id)">
                   删除
                 </el-button>
               </template>
             </el-table-column>
           </el-table>
         </el-tab-pane>
-        <el-tab-pane label="静态属性" name="only">
-          <el-button
-            type="primary"
-            size="mini"
-            :disabled="isBtnDisabled"
-            @click="addmanyDataDialogVisible = true"
-            >添加参数
+        <el-tab-pane label="静态属性"
+                     name="only">
+          <el-button type="primary"
+                     size="mini"
+                     :disabled="isBtnDisabled"
+                     @click="addmanyDataDialogVisible = true">添加参数
           </el-button>
 
           <!-- 静态参数表格 -->
-          <el-table :data="onlyTabData" stripe border>
+          <el-table :data="onlyTabData"
+                    stripe
+                    border>
             <el-table-column type="expand">
               <template #default="scope">
-                <el-tag
-                  v-for="(item, index) in scope.row.attr_vals"
-                  :key="index"
-                  closable
-                  @close="handleClose(index, scope.row)"
-                >
+                <el-tag v-for="(item, index) in scope.row.attr_vals"
+                        :key="index"
+                        closable
+                        @close="handleClose(index, scope.row)">
                   {{ item }}
                 </el-tag>
-                <el-input
-                  class="input-new-tag"
-                  v-if="scope.row.addNewTagVisible"
-                  v-model="scope.row.addNewTagValue"
-                  ref="saveTagInput"
-                  size="small"
-                  @keyup.enter.native="handleInputConfirm(scope.row)"
-                  @blur="handleInputConfirm(scope.row)"
-                >
+                <el-input class="input-new-tag"
+                          v-if="scope.row.addNewTagVisible"
+                          v-model="scope.row.addNewTagValue"
+                          ref="saveTagInput"
+                          size="small"
+                          @keyup.enter.native="handleInputConfirm(scope.row)"
+                          @blur="handleInputConfirm(scope.row)">
                 </el-input>
-                <el-button
-                  v-else
-                  class="button-new-tag"
-                  size="small"
-                  @click="showInput(scope.row)"
-                  >+ New Tag</el-button
-                >
+                <el-button v-else
+                           class="button-new-tag"
+                           size="small"
+                           @click="showInput(scope.row)">+ New Tag</el-button>
               </template>
             </el-table-column>
             <el-table-column type="index"> </el-table-column>
-            <el-table-column
-              label="参数名称"
-              prop="attr_name"
-            ></el-table-column>
-            <el-table-column label="操作" width="400">
+            <el-table-column label="参数名称"
+                             prop="attr_name"></el-table-column>
+            <el-table-column label="操作"
+                             width="400">
               <template #default="scope">
-                <el-button
-                  size="mini"
-                  type="primary"
-                  icon="el-icon-edit "
-                  @click="showEditManyData(scope.row.attr_id)"
-                >
+                <el-button size="mini"
+                           type="primary"
+                           icon="el-icon-edit "
+                           @click="showEditManyData(scope.row.attr_id)">
                   编辑
                 </el-button>
-                <el-button
-                  size="mini"
-                  type="danger"
-                  icon="el-icon-delete"
-                  @click="deleteDataInfo(scope.row.attr_id)"
-                >
+                <el-button size="mini"
+                           type="danger"
+                           icon="el-icon-delete"
+                           @click="deleteDataInfo(scope.row.attr_id)">
                   删除
                 </el-button>
               </template>
@@ -169,50 +144,48 @@
     </el-card>
 
     <!-- 添加参数弹出框 -->
-    <el-dialog
-      :title="titleText"
-      :visible.sync="addmanyDataDialogVisible"
-      width="50%"
-      @close="addmanyDataClose"
-    >
-      <el-form
-        :label-position="labelPosition"
-        label-width="90px"
-        :model="addmanyData"
-        :rules="addmanyDataFormRules"
-        ref="addmanyDataFormRef"
-      >
-        <el-form-item label="动态参数:" prop="attr_name">
+    <el-dialog :title="titleText"
+               :visible.sync="addmanyDataDialogVisible"
+               width="50%"
+               @close="addmanyDataClose">
+      <el-form :label-position="labelPosition"
+               label-width="90px"
+               :model="addmanyData"
+               :rules="addmanyDataFormRules"
+               ref="addmanyDataFormRef">
+        <el-form-item label="动态参数:"
+                      prop="attr_name">
           <el-input v-model="addmanyData.attr_name"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer"
+            class="dialog-footer">
         <el-button @click="addmanyDataDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addmanyDataInfo">确 定</el-button>
+        <el-button type="primary"
+                   @click="addmanyDataInfo">确 定</el-button>
       </span>
     </el-dialog>
 
     <!-- 编辑参数弹出框 -->
-    <el-dialog
-      title="编辑参数"
-      :visible.sync="editmanyDataDialogVisible"
-      width="50%"
-      @close="editmanyDataClose"
-    >
-      <el-form
-        :label-position="labelPosition"
-        label-width="90px"
-        :model="editmanyData"
-        :rules="addmanyDataFormRules"
-        ref="editManyDataFormRef"
-      >
-        <el-form-item :label="translateData" prop="attr_name">
+    <el-dialog title="编辑参数"
+               :visible.sync="editmanyDataDialogVisible"
+               width="50%"
+               @close="editmanyDataClose">
+      <el-form :label-position="labelPosition"
+               label-width="90px"
+               :model="editmanyData"
+               :rules="addmanyDataFormRules"
+               ref="editManyDataFormRef">
+        <el-form-item :label="translateData"
+                      prop="attr_name">
           <el-input v-model="editmanyData.attr_name"></el-input>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer"
+            class="dialog-footer">
         <el-button @click="editmanyDataDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editManyDataInfo">确 定</el-button>
+        <el-button type="primary"
+                   @click="editManyDataInfo">确 定</el-button>
       </span>
     </el-dialog>
   </div>
